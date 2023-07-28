@@ -36,13 +36,14 @@ const startGame = async () => {
     introChoice.start ===
     "Follow the creatures deeper into the forest to seek their help."
   ) {
-    await sylvanianHelp();
+    await sylvanianHelp(); //First split: option 1
   } else {
-    await distressSignal();
+    await distressSignal(); //First split: option 2
   }
 };
 
 const sylvanianHelp = async () => {
+  //Option 1
   const sylvanianChoice = await inquirer.prompt([
     {
       type: "list",
@@ -58,7 +59,7 @@ const sylvanianHelp = async () => {
 
   if (
     sylvanianChoice.sylvanianHelp ===
-    "Agree to help the Sylvanians retrieve the energy crystal."
+    "Agree to help the Sylvanians retrieve the energy crystal." //Option 1.1
   ) {
     const zaraChoice = await inquirer.prompt([
       {
@@ -74,11 +75,13 @@ const sylvanianHelp = async () => {
     ]);
 
     if (zaraChoice.zaraOption === "Explore the temple with Zara.") {
+      //Option 1.1.1
       console.log(
         "You and Zara explore the temple and discover the ancient artifact, unleashing its power to repair your ship and grant you both new abilities for your future space adventures.\n\n--- The End ---"
       );
       playAgain();
     } else {
+      //Option 1.1.2
       console.log(
         "You decide to focus on finding a way to repair your ship. The Sylvanians assist you, and with their help, you successfully fix your ship and continue your journey through the universe.\n\n--- The End ---"
       );
@@ -86,7 +89,7 @@ const sylvanianHelp = async () => {
     }
   } else if (
     sylvanianChoice.sylvanianHelp ===
-    "Refuse their offer and attempt to repair the ship yourself."
+    "Refuse their offer and attempt to repair the ship yourself." //Option 1.2
   ) {
     console.log(
       "As you attempt to repair the ship, you realize it requires a specialized tool that you don't have. You starve to death in your stubbornness.\n\n --- The End ---"
@@ -96,6 +99,7 @@ const sylvanianHelp = async () => {
 };
 
 const distressSignal = async () => {
+  //Option 2
   const distressSignalChoice = await inquirer.prompt([
     {
       type: "list",
@@ -110,13 +114,14 @@ const distressSignal = async () => {
   ]);
 
   if (
-    distressSignalChoice.distressSignal === "Investigate the distress signal."
+    distressSignalChoice.distressSignal === "Investigate the distress signal." //Option 2.1
   ) {
     console.log(
       "The distress signal is your morning alarm. WAKE UP YOU'RE LATE FOR WORK\n\n---The End ---"
     );
     playAgain();
   } else {
+    //Option 2.2
     console.log(
       "The aggressive wildlife surrounds your ship, leaving you trapped on the planet forever.\n\n--- The End ---"
     );
