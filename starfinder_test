@@ -1,0 +1,127 @@
+const inquirer = require("inquirer");
+
+const playAgain = async () => {
+  const play = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "playAgain",
+      message: "Do you want to play again?",
+      default: true,
+    },
+  ]);
+  if (play.playAgain) {
+    startGame();
+  } else {
+    console.log("Thanks for playing!");
+  }
+};
+
+const startGame = async () => {
+  console.log("--- Starfinder Adventure ---\n");
+
+  const introChoice = await inquirer.prompt([
+    {
+      type: "list",
+      name: "start",
+      message:
+        'You are aboard the interstellar spaceship "Starfinder." As you approach a remote planet, your ship is hit by a mysterious energy surge, forcing you to crash-land on the unknown world. What do you do?',
+      choices: [
+        "Follow the creatures deeper into the forest to seek their help.",
+        "Stay hidden in your crashed ship to assess the situation.",
+      ],
+    },
+  ]);
+
+  if (
+    introChoice.start ===
+    "Follow the creatures deeper into the forest to seek their help."
+  ) {
+    await sylvanianHelp();
+  } else {
+    await distressSignal();
+  }
+};
+
+const sylvanianHelp = async () => {
+  const sylvanianChoice = await inquirer.prompt([
+    {
+      type: "list",
+      name: "sylvanianHelp",
+      message:
+        'You follow the creatures to their hidden village. They are benevolent alien beings called "Sylvanians." They offer to help you repair your ship, but they need a rare energy crystal guarded by a hostile tribe. What will you do?',
+      choices: [
+        "Agree to help the Sylvanians retrieve the energy crystal.",
+        "Refuse their offer and attempt to repair the ship yourself.",
+      ],
+    },
+  ]);
+
+  if (
+    sylvanianChoice.sylvanianHelp ===
+    "Agree to help the Sylvanians retrieve the energy crystal."
+  ) {
+    const zaraChoice = await inquirer.prompt([
+      {
+        type: "list",
+        name: "zaraOption",
+        message:
+          "You find a friendly survivor named Zara who reveals that the energy surge was caused by an ancient artifact hidden in a nearby temple. What will you do?",
+        choices: [
+          "Explore the temple with Zara.",
+          "Focus on finding a way to repair your ship.",
+        ],
+      },
+    ]);
+
+    if (zaraChoice.zaraOption === "Explore the temple with Zara.") {
+      console.log(
+        "You and Zara explore the temple and discover the ancient artifact, unleashing its power to repair your ship and grant you both new abilities for your future space adventures.\n\n--- The End ---"
+      );
+      playAgain();
+    } else {
+      console.log(
+        "You decide to focus on finding a way to repair your ship. The Sylvanians assist you, and with their help, you successfully fix your ship and continue your journey through the universe.\n\n--- The End ---"
+      );
+      playAgain();
+    }
+  } else if (
+    sylvanianChoice.sylvanianHelp ===
+    "Refuse their offer and attempt to repair the ship yourself."
+  ) {
+    console.log(
+      "As you attempt to repair the ship, you realize it requires a specialized tool that you don't have. You starve to death in your stubbornness.\n\n --- The End ---"
+    );
+    playAgain();
+  }
+};
+
+const distressSignal = async () => {
+  const distressSignalChoice = await inquirer.prompt([
+    {
+      type: "list",
+      name: "distressSignal",
+      message:
+        "While hiding in your ship, you receive a distress signal from another crash survivor nearby. What will you do?",
+      choices: [
+        "Investigate the distress signal.",
+        "Stay hidden and avoid potential danger.",
+      ],
+    },
+  ]);
+
+  if (
+    distressSignalChoice.distressSignal === "Investigate the distress signal."
+  ) {
+    console.log(
+      "The distress signal is your morning alarm. WAKE UP YOU'RE LATE FOR WORK\n\n---The End ---"
+    );
+    playAgain();
+  } else {
+    console.log(
+      "The aggressive wildlife surrounds your ship, leaving you trapped on the planet forever.\n\n--- The End ---"
+    );
+    playAgain();
+  }
+};
+
+startGame();
